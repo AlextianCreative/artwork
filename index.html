@@ -649,23 +649,27 @@ async function sendTelegramMessage() {
     let chatID = "1505004163";
     let telegramURL = `https://api.telegram.org/bot${botToken}/sendMessage`;
     
-    try {
+     try {
         let response = await fetch(telegramURL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 chat_id: chatID,
-                text: formattedMessage,
-                parse_mode: "HTML" // Mengatur format HTML agar teks dapat diparsing dengan tag HTML
+                text: message
             })
         });
-
+        
         let result = await response.json();
         console.log(result);
-        alert("Successfully sent message");
+        
+        if (result.ok) {
+            alert("Message sent successfully!");
+        } else {
+            alert("Failed to send message.");
+        }
     } catch (error) {
         console.error("Error:", error);
-        alert("Failed to send message, please send via Whatsapp");
+        alert("Failed to send message, please try again later.");
     }
 }
 </script>
