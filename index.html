@@ -624,6 +624,26 @@
 <script>
 async function sendTelegramMessage() {
     let message = document.getElementById("message").value;
+    let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
+    
+    // Cek apakah checkbox tercentang
+    let logoChecked = document.getElementById("inlineCheckbox1").checked;
+    let abstractChecked = document.getElementById("inlineCheckbox2").checked;
+    let realisticChecked = document.getElementById("inlineCheckbox3").checked;
+    let customChecked = document.getElementById("inlineCheckbox4").checked;
+
+    // Format pesan untuk dikirim ke Telegram
+    let formattedMessage = `
+        <strong>Nama:</strong> ${name} <br>
+        <strong>Email:</strong> ${email} <br>
+        <strong>Pesan:</strong> ${message} <br>
+        <strong>Logo:</strong> ${logoChecked ? "Checked" : "Not Checked"} <br>
+        <strong>Abstract:</strong> ${abstractChecked ? "Checked" : "Not Checked"} <br>
+        <strong>Realistic:</strong> ${realisticChecked ? "Checked" : "Not Checked"} <br>
+        <strong>Custom:</strong> ${customChecked ? "Checked" : "Not Checked"} <br>
+    `;
+    
     let botToken = "7732836954:AAFDYwN_TkF5GZW51FZ-lBZzb_ZKBIYZ9y4";
     let chatID = "1505004163";
     let telegramURL = `https://api.telegram.org/bot${botToken}/sendMessage`;
@@ -633,7 +653,8 @@ async function sendTelegramMessage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
             chat_id: chatID,
-            text: message
+            text: formattedMessage,
+            parse_mode: "HTML"
         })
     });
 
