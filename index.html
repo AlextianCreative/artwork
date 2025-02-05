@@ -628,21 +628,22 @@ async function sendTelegramMessage() {
     let name = document.getElementById("name").value;
     let email = document.getElementById("email").value;
     
-    // Cek apakah checkbox tercentang
+  
     let logoChecked = document.getElementById("inlineCheckbox1").checked;
     let abstractChecked = document.getElementById("inlineCheckbox2").checked;
     let realisticChecked = document.getElementById("inlineCheckbox3").checked;
     let customChecked = document.getElementById("inlineCheckbox4").checked;
 
-    // Format pesan untuk dikirim ke Telegram
+    
     let formattedMessage = `
-        <strong>Nama:</strong> ${name} <br>
-        <strong>Email:</strong> ${email} <br>
-        <strong>Pesan:</strong> ${message} <br>
-        <strong>Logo:</strong> ${logoChecked ? "Checked" : "Not Checked"} <br>
-        <strong>Abstract:</strong> ${abstractChecked ? "Checked" : "Not Checked"} <br>
-        <strong>Realistic:</strong> ${realisticChecked ? "Checked" : "Not Checked"} <br>
-        <strong>Custom:</strong> ${customChecked ? "Checked" : "Not Checked"} <br>
+        Nama: ${name}
+        Email: ${email}
+        Pesan: ${message}
+        
+        Logo: ${logoChecked}
+        Abstract: ${abstractChecked}
+        Realistic: ${realisticChecked}
+        Custom: ${customChecked}
     `;
     
     let botToken = "7732836954:AAFDYwN_TkF5GZW51FZ-lBZzb_ZKBIYZ9y4";
@@ -655,21 +656,22 @@ async function sendTelegramMessage() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 chat_id: chatID,
-                text: message
+                text: formattedMessage,
+                parse_mode: "Markdown"
             })
         });
-        
+
         let result = await response.json();
         console.log(result);
         
         if (result.ok) {
-            alert("Message sent successfully!");
+            alert("Pesan berhasil dikirim!");
         } else {
-            alert("Failed to send message.");
+            alert("Gagal mengirim pesan: " + result.description);
         }
     } catch (error) {
         console.error("Error:", error);
-        alert("Failed to send message, please try again later.");
+        alert("Gagal mengirim pesan, coba lagi.");
     }
 }
 </script>
@@ -712,7 +714,7 @@ async function sendTelegramMessage() {
             
             charCount.textContent = remaining + " characters remaining";
             
-            // Ubah warna jika mendekati batas
+            
             if (remaining < 50) {
                 charCount.style.color = "red";
             } else {
