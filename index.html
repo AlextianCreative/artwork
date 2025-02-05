@@ -581,7 +581,7 @@
                                         </div>
 
                                         <div class="col-lg-3 col-12 ms-auto">
-                                            <button type="submit" onclick="sendTelegramMessage()" class="form-control">Send</button>
+                                            <button onclick="sendTelegramMessage()" class="form-control">Send</button>
                                         </div>
 
                                     </div>
@@ -623,7 +623,6 @@
         
 <script>
 async function sendTelegramMessage(event) {
-    event.preventDefault(); // Mencegah form submit default (reload)
 
     let message = document.getElementById("message").value;
     let botToken = "7732836954:AAFDYwN_TkF5GZW51FZ-lBZzb_ZKBIYZ9y4"; // Ganti dengan token bot
