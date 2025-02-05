@@ -46,7 +46,7 @@
 
                 <div class="d-flex align-items-center d-lg-none">
                     <i class="navbar-icon bi-telephone-plus me-3"></i>
-                    <a class="custom-btn btn" href="#section_5">
+                    <a class="custom-btn btn" href="#contact_section">
                         62-897-565-0444
                     </a>
                 </div>
@@ -54,23 +54,23 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-lg-5">
                         <li class="nav-item">
-                            <a class="nav-link click-scroll" href="#section_1">Home</a>
+                            <a class="nav-link click-scroll" href="#home_section">Home</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link click-scroll" href="#section_2">About</a>
+                            <a class="nav-link click-scroll" href="#about_section">About</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link click-scroll" href="#section_3">Marketplace</a>
+                            <a class="nav-link click-scroll" href="#market_section">Marketplace</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link click-scroll" href="#section_4">Order</a>
+                            <a class="nav-link click-scroll" href="#order_section">Order</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link click-scroll" href="#section_5">Contact</a>
+                            <a class="nav-link click-scroll" href="#contact_section">Contact</a>
                         </li>
                     </ul>
 
@@ -87,7 +87,7 @@
 
         <main>
 
-            <section class="hero d-flex justify-content-center align-items-center" id="section_1">
+            <section class="hero d-flex justify-content-center align-items-center" id="home_section">
                 <div class="container">
                     <div class="row">
 
@@ -100,7 +100,7 @@
                                 </div>
 
                                 <h2 class="mb-4">I’m available for freelance work.</h2>
-                                <p class="mb-4"><a class="custom-btn btn custom-link" href="#section_2">Let's begin</a></p>
+                                <p class="mb-4"><a class="custom-btn btn custom-link" href="#about_section">Let's begin</a></p>
                             </div>
                         </div>
 
@@ -116,7 +116,7 @@
             </section>
 
 
-            <section class="about section-padding" id="section_2">
+            <section class="about section-padding" id="about_section">
                 <div class="container">
                     <div class="row">
 
@@ -267,7 +267,7 @@
             </section>
 
 
-            <section class="services section-padding" id="section_3">
+            <section class="services section-padding" id="market_section">
                 <div class="container">
                     <div class="row">
 
@@ -372,7 +372,7 @@
             </section>
 
 
-            <section class="projects section-padding" id="section_4">
+            <section class="projects section-padding" id="order_section">
                 <div class="container">
                     <div class="row">
 
@@ -394,7 +394,7 @@
                                     <h3 class="projects-title">Logo</h3>
                                 </div>
 
-                                <a href="#section_5" onclick="handleClick1()"> 
+                                <a href="#contact_section" onclick="handleClick1()"> 
                                     <img src="images/projects/3266.jpg" class="projects-image img-fluid" alt="">
                                 </a>
                             </div>
@@ -408,7 +408,7 @@
                                     <h3 class="projects-title">Abstract</h3>
                                 </div>
 
-                                <a href="#section_5" onclick="handleClick2()"> 
+                                <a href="#contact_section" onclick="handleClick2()"> 
                                     <img src="images/projects/4390.jpg" class="projects-image img-fluid" alt="">
                                 </a>
                             </div>
@@ -422,7 +422,7 @@
                                     <h3 class="projects-title">Realistic</h3>
                                 </div>
 
-                                <a href="#section_5" onclick="handleClick3()"> 
+                                <a href="#contact_section" onclick="handleClick3()"> 
                                     <img src="images/projects/4306.jpg" class="projects-image img-fluid" alt="">
                                 </a>
                             </div>
@@ -432,7 +432,7 @@
                 </div>
             </section>
 
-            <section class="contact section-padding" id="section_5">
+            <section class="contact section-padding" id="contact_section">
                     <div class="container">
                         <div class="row">
 
@@ -581,7 +581,7 @@
                                         </div>
 
                                         <div class="col-lg-3 col-12 ms-auto">
-                                            <button type="submit" class="form-control">Send</button>
+                                            <button type="submit" onclick="sendTelegramMessage()" class="form-control">Send</button>
                                         </div>
 
                                     </div>
@@ -620,45 +620,42 @@
         <script src="js/jquery.magnific-popup.min.js"></script>
         <script src="js/magnific-popup-options.js"></script>
         <script src="js/custom.js"></script>
-        <script src="https://api.backendless.com/sdk/js/latest/backendless.min.js"></script>
+        
 <script>
-    // Ganti dengan App ID dan API Key dari Backendless
-    Backendless.initApp("633EF9B4-2BBD-4449-B2BF-6EA1BCF5C243", "77A4BC6A-BF4B-44A9-95C7-CB8EFA39E9AC");
+async function sendTelegramMessage(event) {
+    event.preventDefault(); // Mencegah form submit default (reload)
 
-    document.querySelector(".contact-form").addEventListener("submit", async function (event) {
-        event.preventDefault(); // Mencegah reload halaman
+    let message = document.getElementById("message").value;
+    let botToken = "7732836954:AAFDYwN_TkF5GZW51FZ-lBZzb_ZKBIYZ9y4"; // Ganti dengan token bot
+    let chatID = "1505004163"; // Ganti dengan chat ID Anda
 
-        // Ambil data dari form
-        let formData = {
-            name: document.getElementById("name").value,
-            email: document.getElementById("email").value,
-            message: document.getElementById("message").value,
-            logo: document.getElementById("inlineCheckbox1").checked,
-            abstract: document.getElementById("inlineCheckbox2").checked,
-            realistic: document.getElementById("inlineCheckbox3").checked,
-            custom: document.getElementById("inlineCheckbox4").checked
-        };
+    let telegramURL = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
-        try {
-            // Simpan ke Backendless Database
-            let response = await Backendless.Data.of("ContactForm").save(formData);
-            
-            // Kirim notifikasi email ke admin
-            await Backendless.Messaging.sendEmail(
-                "New Contact Form Submission", // Subject Email
-                `Nama: ${formData.name} <br> 
-                Email: ${formData.email} <br> 
-                Pesan: ${formData.message}`, // Body Email
-                ["rendixalextian@graphic-designer.com"] // Ganti dengan email penerima
-            );
-
-            alert("Pesan berhasil dikirim!");
-        } catch (error) {
-            console.error("Error:", error);
-            alert("Gagal mengirim pesan.");
+    try {
+        let response = await fetch(telegramURL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                chat_id: chatID,
+                text: message
+            })
+        });
+        
+        let result = await response.json();
+        console.log(result);
+        
+        if (result.ok) {
+            alert("Message sent successfully!");
+        } else {
+            alert("Failed to send message.");
         }
-    });
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Failed to send message, please try again later.");
+    }
+}
 </script>
+
 
 
         <script>
