@@ -207,7 +207,7 @@
                                     </div>
 
                                     <div class="col-lg-6 col-6 featured-border-start featured-border-bottom ps-5 py-2">
-                                        <strong class="featured-numbers">150K+</strong>
+                                        <strong class="featured-numbers">200K+</strong>
 
                                         <p class="featured-text">Vectors Sold</p>
                                     </div>
@@ -215,7 +215,7 @@
                                     <div class="col-lg-6 col-6 pt-4">
                                         <strong class="featured-numbers">4700+</strong>
 
-                                        <p class="featured-text">Project Finished</p>
+                                        <p class="featured-text">Assets</p>
                                     </div>
 
                                     <div class="col-lg-6 col-6 featured-border-start ps-5 pt-4">
@@ -648,7 +648,7 @@
                                         </div>
 
                                         <div class="col-lg-3 col-12 ms-auto">
-                                            <button onclick="sendTelegramMessage()" type="submit" class="form-control">Send</button>
+                                            <button onclick="validateAndSend()" type="submit" class="form-control">Send</button>
                                         </div>
 
                                     </div>
@@ -669,7 +669,7 @@
                     <div class="col-lg-12 col-12">
                         <div class="copyright-text-wrap">
                             <p class="mb-0">
-                                <span class="copyright-text">Copyright © 2025 <a href="#">Alextian Creative Artwork</a> Company. All rights reserved.</span>
+                                <span class="copyright-text">Copyright © 2025 <a href="#">Alextian Creative Artwork</a>. All rights reserved.</span>
                                 
                             </p>
                         </div>
@@ -723,17 +723,29 @@ async function sendTelegramMessage() {
         console.log(result);
         
         if (result.ok) {
-            alert("Pesan berhasil dikirim!");
+            alert("Success!");
         } else {
-            alert("Gagal mengirim pesan: " + result.description);
+            alert("Failed: " + result.description);
         }
     } catch (error) {
         console.error("Error:", error);
-        alert("Gagal mengirim pesan, coba lagi.");
+        alert("Failed to sending a message. Please try again");
     }
 }
 </script>
+<script>
+function validateAndSend() {
+    let name = document.getElementById("name").value.trim();
+    let email = document.getElementById("email").value.trim();
 
+    if (name === "" || email === "") {
+        alert("Name and Email cannot be empty!");
+        return; // Menghentikan eksekusi jika kosong
+    }
+
+    sendTelegramMessage(); // Panggil fungsi jika validasi lolos
+}
+</script>
 
 
         <script>
