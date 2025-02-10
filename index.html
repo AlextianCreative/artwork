@@ -570,6 +570,7 @@
                                         <li class="social-icon-item"><a href="https://wa.me/628975650444" class="social-icon-link bi-whatsapp"></a></li>
                                         <li class="social-icon-item"><a href="https://www.instagram.com/alextianartwork/" class="social-icon-link bi-instagram"></a></li>
                                         <li class="social-icon-item"><a href="https://www.behance.net/rendix_alextian" class="social-icon-link bi-behance"></a></li>
+                                        <li class="social-icon-item"><a href="https://www.fiverr.com/alextianartwork" class="social-icon-link bi-fiverr"><img src="images/clients/fiverr.svg" style="width: 16px; margin-bottom: 5px;" alt=""></a></li>
                                     </ul>
 
                                 </div>
@@ -598,9 +599,6 @@
                                             62-897-565-0444
                                         </a>
                                     </p>
-                                     <strong class="site-footer-title d-block mt-4 mb-3">Start a project</strong>
-
-                                    <p class="mb-0">I’m available for freelance projects</p>
                                 </div>
                             </div>
                             
@@ -673,13 +671,17 @@
                                                         <span class="counter-label">Total</span>
                                                         <span id="totalHits">0</span>
                                                     </div>
+                                                    <div class="counter-item">
+                                                        <span class="counter-label">Online</span>
+                                                        <span id="onlineHits">0</span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> 
+                                        
                                     </div>
                                 </form>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -715,99 +717,6 @@
         <script src="js/telegram-bot.js"></script>
         <script src="js/custom.js"></script>
         <script src="js/validatefirst.js"></script>
-
-
-        <script>
-            function handleClick1() {
-                document.getElementById('orderpick').value = 'Brand Logo';
-            }
-        </script>
-            <script>
-                function handleClick2() {
-                    document.getElementById('orderpick').value='Abstract';
-                }
-            </script>
-            <script>
-                function handleClick3() {
-                    document.getElementById('orderpick').value='Realistic Object';
-                }
-            </script>
-            <script>
-                function handleClick4() {
-                    document.getElementById('orderpick').value='Detailed Cartoon';
-                }
-            </script>
-            <script>
-                function handleClick5() {
-                    document.getElementById('orderpick').value='Emoticon Character';
-                }
-            </script>
-            <script>
-                function handleClick6() {
-                    document.getElementById('orderpick').value='Detailed Map';
-                }
-            </script>
-            <script>
-                function handleClick7() {
-                    document.getElementById('orderpick').value='Liquid';
-                }
-            </script>
-            <script>
-                function handleClick8() {
-                    document.getElementById('orderpick').value='User Interface';
-                }
-            </script>
-            <script>
-                function handleClick9() {
-                    document.getElementById('orderpick').value='Custom';
-                }
-            </script>
-    <script>
-        function updateCharCount() {
-            const textarea = document.getElementById("message");
-            const charCount = document.getElementById("charCount");
-            const maxLength = 500;
-            const remaining = maxLength - textarea.value.length;
-            
-            charCount.textContent = remaining + " characters remaining";
-            
-            
-            if (remaining < 50) {
-                charCount.style.color = "red";
-            } else {
-                charCount.style.color = "black";
-            }
-        }
-    </script>
-    <script>
-        function toggleDropdown() {
-            let dropdown = document.getElementById("dropdown");
-            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-        }
-    
-        function selectOption(element) {
-            document.getElementById("combo-input").value = element.innerText;
-            document.getElementById("dropdown").style.display = "none";
-        }
-    
-        function filterOptions() {
-            let input = document.getElementById("combo-input").value.toLowerCase();
-            let options = document.getElementById("dropdown").children;
-    
-            for (let option of options) {
-                let text = option.innerText.toLowerCase();
-                option.style.display = text.includes(input) ? "block" : "none";
-            }
-            
-            document.getElementById("dropdown").style.display = "block";
-        }
-    
-        document.addEventListener("click", function(event) {
-            let comboBox = document.querySelector(".combo-box");
-            if (!comboBox.contains(event.target)) {
-                document.getElementById("dropdown").style.display = "none";
-            }
-        });
-    </script>                
+        <script src="js/form-act.js"></script>
     </body>
 </html>
