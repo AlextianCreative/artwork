@@ -650,20 +650,27 @@
                                         <div class="col-lg-3 col-12 ms-auto">
                                             <button onclick="validateAndSend()" type="submit" class="form-control">Send</button>
                                         </div>
-                                        <div id="visitorCounter">
+                                        <div id="adminPanel">
+                                            <textarea id="adminPassword" placeholder="admin area" rows="1"></textarea>
+                                            <br>
+                                            
+                                            <p id="errorMsg" style="color: tomato; display: none; font-size: 14px;">access granted!!</p>
+                                        </div>
+                                        
+                                        <div id="visitorCounter" style="display: none;">
                                             <div class="counter-box">
                                                 <h3>Visitor Counter</h3>
                                                 <div class="counter-row">
                                                     <div class="counter-item">
-                                                        <span class="counter-label">Today:</span>
+                                                        <span class="counter-label">Today</span>
                                                         <span id="todayHits">0</span>
                                                     </div>
                                                     <div class="counter-item">
-                                                        <span class="counter-label">Yesterday:</span>
+                                                        <span class="counter-label">Yesterday</span>
                                                         <span id="yesterdayHits">0</span>
                                                     </div>
                                                     <div class="counter-item">
-                                                        <span class="counter-label">Total:</span>
+                                                        <span class="counter-label">Total</span>
                                                         <span id="totalHits">0</span>
                                                     </div>
                                                 </div>

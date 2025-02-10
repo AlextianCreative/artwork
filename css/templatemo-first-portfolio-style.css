@@ -218,17 +218,48 @@ strong {
 /*---------------------------------------
   COUNTER               
 -----------------------------------------*/
+#adminPanel {
+  text-align: left;
+  margin-bottom: 10;
+}
+
+#adminPassword {
+  width: 100%;
+  max-width: 250px;
+  padding: 8px;
+  border: 2px solid var(--border-color);
+  border-radius: 5px;
+  font-size: 14px;
+  resize: none;
+  margin-bottom: 10;
+  color: var(--p-color);
+  
+}
+
+button {
+  margin-bottom: 10;
+  padding: 10px;
+  border: none;
+  background: var(--white-color);
+  color: var(--p-color);
+  border-radius: 5px;
+  font-weight: var(--font-weight-bold);
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+/* Counter */
 #visitorCounter {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 20px auto;
-  font-family: Arial, sans-serif;
+  font-family: Roboto, sans-serif;
 }
 
 .counter-box {
   background: white;
-  color: black;
+  border: 2px solid var(--border-color);
   padding: 15px 20px;
   border-radius: 10px;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
@@ -956,6 +987,15 @@ strong {
   transition: all 0.3s;
   margin-bottom: 0;
 }
+.custom-form button[type="admin"] {
+  background: var(--secondary-color);
+  border: none;
+  border-radius: var(--border-radius-large);
+  color: var(--white-color);
+  font-weight: var(--font-weight-bold);
+  transition: all 0.3s;
+  margin-bottom: 0;
+}
 
 .custom-form button[type="submit"]:hover,
 .custom-form button[type="submit"]:focus {
@@ -1267,4 +1307,3 @@ strong {
     min-width: inherit;
   }
 }
-

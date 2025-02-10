@@ -1,3 +1,22 @@
+document.getElementById("adminPassword").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault(); // Mencegah pembuatan baris baru
+        checkPassword(); // Eksekusi fungsi password
+    }
+});
+
+function checkPassword() {
+    const passwordInput = document.getElementById("adminPassword").value;
+    const correctPassword = "admin123"; // Ganti dengan password rahasia Anda
+
+    if (passwordInput === correctPassword) {
+        document.getElementById("visitorCounter").style.display = "block";
+        document.getElementById("errorMsg").style.display = "none";
+    } else {
+        document.getElementById("errorMsg").style.display = "block";
+    }
+}
+
 function updateVisitorCounter() {
     let today = new Date().toLocaleDateString();
     let storedDate = localStorage.getItem("visitorDate");
@@ -6,19 +25,15 @@ function updateVisitorCounter() {
     let totalHits = parseInt(localStorage.getItem("totalHits")) || 0;
 
     if (storedDate !== today) {
-        // Jika hari berganti, simpan data kemarin dan reset todayHits
         localStorage.setItem("yesterdayHits", todayHits);
         localStorage.setItem("todayHits", 1);
         localStorage.setItem("visitorDate", today);
     } else {
-        // Jika masih di hari yang sama, tambahkan hitungan
         localStorage.setItem("todayHits", todayHits + 1);
     }
 
-    // Tambahkan total kunjungan
     localStorage.setItem("totalHits", totalHits + 1);
 
-    // Update tampilan
     document.getElementById("todayHits").innerText = localStorage.getItem("todayHits");
     document.getElementById("yesterdayHits").innerText = localStorage.getItem("yesterdayHits");
     document.getElementById("totalHits").innerText = localStorage.getItem("totalHits");
