@@ -650,7 +650,14 @@
                                         <div class="col-lg-3 col-12 ms-auto">
                                             <button onclick="validateAndSend()" type="submit" class="form-control">Send</button>
                                         </div>
-
+                                        <div id="visitorCounter">
+                                            <div class="counter-box">
+                                                <h3>Visitor Counter</h3>
+                                                <p><strong>Today:</strong> <span id="todayHits">0</span></p>
+                                                <p><strong>Yesterday:</strong> <span id="yesterdayHits">0</span></p>
+                                                <p><strong>Total:</strong> <span id="totalHits">0</span></p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
@@ -686,66 +693,10 @@
         <script src="js/click-scroll.js"></script>
         <script src="js/jquery.magnific-popup.min.js"></script>
         <script src="js/magnific-popup-options.js"></script>
+        <script src="js/visitorcounter.js"></script>
+        <script src="js/telegram-bot.js"></script>
         <script src="js/custom.js"></script>
-        
-<script>
-async function sendTelegramMessage() {
-    event.preventDefault();
-    let message = document.getElementById("message").value;
-    let name = document.getElementById("name").value;
-    let email = document.getElementById("email").value;
-    let order = document.getElementById("orderpick").value;
-
-    
-    let formattedMessage = `
-        Nama: ${name}
-        Email: ${email}
-        Order: ${order}
-        Pesan: ${message}
-    `;
-    
-    let botToken = "7732836954:AAFDYwN_TkF5GZW51FZ-lBZzb_ZKBIYZ9y4";
-    let chatID = "1505004163";
-    let telegramURL = `https://api.telegram.org/bot${botToken}/sendMessage`;
-    
-     try {
-        let response = await fetch(telegramURL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                chat_id: chatID,
-                text: formattedMessage,
-                parse_mode: "Markdown"
-            })
-        });
-
-        let result = await response.json();
-        console.log(result);
-        
-        if (result.ok) {
-            alert("Success!");
-        } else {
-            alert("Failed: " + result.description);
-        }
-    } catch (error) {
-        console.error("Error:", error);
-        alert("Failed to sending a message. Please try again");
-    }
-}
-</script>
-<script>
-function validateAndSend() {
-    let name = document.getElementById("name").value.trim();
-    let email = document.getElementById("email").value.trim();
-
-    if (name === "" || email === "") {
-        alert("Name and Email cannot be empty!");
-        return; // Menghentikan eksekusi jika kosong
-    }
-
-    sendTelegramMessage(); // Panggil fungsi jika validasi lolos
-}
-</script>
+        <script src="js/validatefirst.js"></script>
 
 
         <script>
