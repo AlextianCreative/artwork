@@ -769,7 +769,7 @@ button {
 }
 
 .services-icon-wrap {
-  border: 1px solid var(--border-color);
+  border: none;
   border-radius: var(--border-radius-small);
   position: absolute;
   bottom: 0;

@@ -1,5 +1,5 @@
 function handleClick1() {
-    document.getElementById('orderpick').value = 'Brand Logo';
+    document.getElementById('orderpick').value ='Brand Logo';
 }
 function handleClick2() {
     document.getElementById('orderpick').value='Abstract';
@@ -24,6 +24,10 @@ function handleClick8() {
 }
 function handleClick9() {
     document.getElementById('orderpick').value='Custom';
+}
+function handleClick10() {
+    document.getElementById('orderpick').value='Buy Directly';
+    document.getElementById('message').value='Related vector link : (required) #yourmessage';
 }
 function updateCharCount() {
     const textarea = document.getElementById("message");
