@@ -1,0 +1,12 @@
+CLIENT PROJECT LICENSE
+
+(Copyright © Rendix Alextian, Alextian Creative Artwork, Alextian Artwork, LotusRex, FightingFear)
+
+This license allows one-time usage of the Assets in a single client project (branding, campaign, web design, etc.). Redistribution outside that project is prohibited.
+
+The client may not:
+
+Resell or distribute the Assets as standalone files
+Use in unrelated projects without acquiring a separate license
+
+License ownership remains with the original buyer (designer/freelancer) unless specified otherwise.

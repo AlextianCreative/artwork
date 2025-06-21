@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Digital Signature Verification</title>
+  <link rel="icon" href="images/lotusrex.ico" type="image/x-icon">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/forge/1.3.1/forge.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f4f8;
+      margin: 0;
+      padding: 2rem;
+      color: #333;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #2c3e50;
+    }
+
+    #zipInput {
+      width: 100%;
+      padding: 0.8rem;
+      border: 2px dashed #ccc;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+      cursor: pointer;
+      margin-bottom: 1rem;
+    }
+
+    #zipInput:hover {
+      background-color: #e8f0fe;
+    }
+
+    .result-card {
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-top: 1rem;
+      background: #f8f8f8;
+      border-left: 6px solid #bbb;
+    }
+
+    .success {
+      border-left-color: #2ecc71;
+      background-color: #e9f9f1;
+    }
+
+    .error {
+      border-left-color: #e74c3c;
+      background-color: #faeaea;
+    }
+
+    .label {
+      font-weight: bold;
+      color: #555;
+    }
+
+    .value {
+      margin-bottom: 0.5rem;
+    }
+
+    .image-compare {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .image-compare div {
+      flex: 1;
+      text-align: center;
+    }
+
+    .image-compare img {
+      max-width: 50%;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+
+    }
+    .footer {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #999;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🔐 Digital Signature Verification</h2>
+    <p>Upload the ZIP file containing <code>signature.json</code> to verify the digital signature.</p>
+    <input type="file" id="zipInput" accept=".zip" />
+
+    <h2 id="txtres" style="display: none;"><center>Result</center></h2>
+    <div id="result" class="result-card" style="display: none;"></div>
+
+    <div class="image-compare" style="display: none;" id="imageCompare">
+      <p><i><center>Example Result</center></i></p>
+      <div>
+        <p>✅<i> Valid</i></p>
+        <img src="images/success-example.png" alt="Contoh Valid">
+      </div>
+      <div>
+        <p>❌<i> NOT Valid</i></p>
+        <img src="images/failed-example.png" alt="Contoh Tidak Valid">
+      </div>
+    </div>
+
+    <div class="footer">Powered by JSZip + Forge + WebCrypto</div>
+    <div><center>Made by Alextian Creative</center></div>
+  </div>
+
+  <script>
+    function base64ToBigInt(base64) {
+      return new forge.jsbn.BigInteger(forge.util.createBuffer(forge.util.decode64(base64)).toHex(), 16);
+    }
+
+    document.getElementById('zipInput').addEventListener('change', async (event) => {
+      const file = event.target.files[0];
+      const resultTxt = document.getElementById('txtres');
+      const resultDiv = document.getElementById('result');
+      const imageCompare = document.getElementById('imageCompare');
+      resultTxt.style.display = "block";
+      resultDiv.style.display = "block";
+      imageCompare.style.display = "block";
+
+      if (!file) {
+        resultDiv.className = 'result-card error';
+        resultDiv.innerText = "❌ No ZIP files uploaded. Please select a valid ZIP file containing signature.json.";
+        return;
+      }
+
+      try {
+        const zip = await JSZip.loadAsync(file);
+        const sigJson = JSON.parse(await zip.file("signature.json").async("string"));
+        const originalFile = await zip.file(sigJson.FileName).async("uint8array");
+
+        // Hash SHA-256 dari file
+        const hashBuffer = await crypto.subtle.digest("SHA-256", originalFile);
+        const hashBase64 = btoa(String.fromCharCode(...new Uint8Array(hashBuffer)));
+
+        if (hashBase64 !== sigJson.SHA256Hash) {
+          resultDiv.className = 'result-card error';
+          resultDiv.innerHTML = `<strong>❌ File has been modified</strong><br>File HASH does not match signature.<br>Expected: <code>${wrapSignature(sigJson.SHA256Hash)}</code><br>Actual: <code>${hashBase64}</code>`;
+          return;
+        }
+
+        // Siapkan public key
+        const modulus = base64ToBigInt(sigJson.PublicKeyModulus);
+        const exponent = base64ToBigInt(sigJson.PublicKeyExponent);
+        const rsa = forge.pki.rsa.setPublicKey(modulus, exponent);
+
+        const signatureBytes = forge.util.decode64(sigJson.Signature);
+        const digest = forge.md.sha256.create();
+        digest.update(forge.util.createBuffer(originalFile).getBytes());
+
+        const isValid = rsa.verify(digest.digest().bytes(), signatureBytes);
+
+        if (isValid) {
+          resultDiv.className = 'result-card success';
+            // Membungkus Signature agar rapi (maks 64 karakter per baris)
+            function wrapSignature(sig, width = 64) {
+            return sig.replace(new RegExp(`(.{1,${width}})`, 'g'), '$1<br>').replace(/<br>$/, '');
+            }
+            resultDiv.innerHTML = `
+            <div class="value"><span class="label">✅ Signature VALID</span></div>
+            <div class="value"><span class="label">Signer     :</span> ${sigJson.Signer}</div>
+            <div class="value"><span class="label">Dates      :</span> ${sigJson.Date}</div>
+            <div class="value"><span class="label">Filename   :</span> ${sigJson.FileName}</div>
+            <div class="value"><span class="label">Signature  :</span><br>
+              <code style="word-break:break-all;white-space:pre-line;">${wrapSignature(sigJson.Signature)}</code>
+            </div>
+          `;
+        } else {
+          resultDiv.className = 'result-card error';
+          resultDiv.innerHTML = `❌ Signature is NOT valid! Files or data may have been changed.`;
+        }
+      } catch (err) {
+        console.error(err);
+        resultDiv.className = 'result-card error';
+        resultDiv.innerText = "❌ An error occurred while verifying the file.\nSignature is NOT valid or there is another problem.\n" + err.message;
+      }
+    });
+  </script>
+</body>
+</html>

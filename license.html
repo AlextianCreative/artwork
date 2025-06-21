@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>License Agreement</title>
+  <link rel="icon" href="images/lotusrex.ico" type="image/x-icon">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .layout {
+      display: flex;
+      height: 100vh;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #dddddd;
+      color: rgb(49, 49, 49);
+      display: flex;
+      flex-direction: column;
+      padding: 1rem 0;
+    }
+
+    .tab {
+      padding: 1rem;
+      text-align: left;
+      border: none;
+      background: none;
+      color: rgb(15, 15, 15);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .tab:hover {
+      background-color: #b6b6b6;
+    }
+
+    .tab.active {
+      background-color: #adadad;
+      font-weight: bold;
+    }
+
+    .content {
+      flex-grow: 1;
+      padding: 2rem;
+      background-color: #f8f9fa;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      font-family: monospace;
+      font-size: large;
+    }
+
+    .header {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+    <h2>🔐 License Agreement</h2>
+    
+  <div class="layout">
+    <div class="sidebar">
+      <button class="tab active" data-file="txt/personal.txt">1. PERSONAL USE</button>
+      <button class="tab" data-file="txt/commercial.txt">2. COMMERCIAL USE</button>
+      <button class="tab" data-file="txt/noncommercial.txt">3. NON-COMMERCIAL USE</button>
+      <button class="tab" data-file="txt/extended.txt">4. EXTENDED USE</button>
+      <button class="tab" data-file="txt/editorial.txt">5. EDITORIAL USE</button>
+      <button class="tab" data-file="txt/client.txt">6. CLIENT USE</button>
+      <button class="tab" data-file="txt/norights.txt">7. NO RIGHTS RESERVED</button>
+    </div>
+    <div class="content" id="noteContent">
+      <div class="header">Loading . . .</div>
+    </div>
+  </div>
+
+  <script>
+    const tabs = document.querySelectorAll('.tab');
+    const content = document.getElementById('noteContent');
+
+    async function loadNote(file, label) {
+      content.innerHTML = `<div class="header">${label}</div><div>Memuat...</div>`;
+      try {
+        const response = await fetch(file);
+        if (!response.ok) throw new Error("Failed to load");
+        const text = await response.text();
+        content.innerHTML = `<div class="header">${label}</div><div>${text}</div>`;
+      } catch (err) {
+        content.innerHTML = `<div class="header">❌ Failed to load</div><div>${err.message}</div>`;
+      }
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        loadNote(tab.dataset.file, tab.textContent.trim());
+      });
+    });
+
+    // Muat default saat pertama
+    loadNote("txt/personal.txt", "PERSONAL USE");
+  </script>
+</body>
+</html>
